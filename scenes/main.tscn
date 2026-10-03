@@ -1,0 +1,70 @@
+[gd_scene load_steps=8 format=3]
+
+; One room, one player, one enemy. That is the whole lab.
+;
+; The walls are there so a big shove has something to end against. Without them a
+; hard hit sends the enemy off screen and you lose the thing you were trying to
+; look at.
+;
+; The floor is drawn LARGER than the 640x360 window on purpose. The camera shakes
+; by up to about 24 pixels, and without the overhang a hard hit would show the
+; empty space past the edge of the room.
+
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="1_player"]
+[ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="2_enemy"]
+[ext_resource type="Script" path="res://scripts/lab_ui.gd" id="3_ui"]
+[ext_resource type="Script" path="res://scripts/world.gd" id="4_world"]
+[ext_resource type="Script" path="res://scripts/shake.gd" id="5_shake"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_horizontal"]
+size = Vector2(640, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vertical"]
+size = Vector2(16, 360)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("4_world")
+
+[node name="Floor" type="Polygon2D" parent="."]
+color = Color(0.055, 0.047, 0.039, 1)
+polygon = PackedVector2Array(-64, -64, 704, -64, 704, 424, -64, 424)
+
+[node name="Arena" type="Polygon2D" parent="."]
+color = Color(0.098, 0.078, 0.063, 1)
+polygon = PackedVector2Array(16, 16, 624, 16, 624, 344, 16, 344)
+
+[node name="Walls" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="Top" type="CollisionShape2D" parent="Walls"]
+position = Vector2(320, 8)
+shape = SubResource("RectangleShape2D_horizontal")
+
+[node name="Bottom" type="CollisionShape2D" parent="Walls"]
+position = Vector2(320, 352)
+shape = SubResource("RectangleShape2D_horizontal")
+
+[node name="Left" type="CollisionShape2D" parent="Walls"]
+position = Vector2(8, 180)
+shape = SubResource("RectangleShape2D_vertical")
+
+[node name="Right" type="CollisionShape2D" parent="Walls"]
+position = Vector2(632, 180)
+shape = SubResource("RectangleShape2D_vertical")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(320, 180)
+zoom = Vector2(2, 2)
+script = ExtResource("5_shake")
+
+; In range of the crate from the first frame. A swing that silently misses is
+; the worst possible first second for somebody who just opened this.
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(358, 180)
+
+[node name="Enemy" parent="." instance=ExtResource("2_enemy")]
+position = Vector2(400, 180)
+
+[node name="LabUI" type="CanvasLayer" parent="."]
+script = ExtResource("3_ui")
