@@ -278,8 +278,19 @@ Want to understand how this works instead of just copying it?
 CodingQuests teaches you how to build systems like this step by step in Godot,
 with interactive lessons and real projects.
 
-- **[Game Feel: Make Combat Hit](https://codingquests.io/quests/game-feel-combat?utm_source=github&utm_medium=resource&utm_campaign=godot_game_feel_lab)** builds one reusable juice autoload and ends with a single `Juice.hit(weight)` call that scales every effect to the size of the blow.
+- **[Game Feel: Make Combat Hit](https://codingquests.io/quests/game-feel-combat?utm_source=github&utm_medium=resource&utm_campaign=godot_game_feel_lab)** builds one reusable juice autoload and ends with a single `Juice.hit(weight)` call that scales every effect to the size of the blow. The first 2 lessons are free.
 - **[The browser version of this lab](https://codingquests.io/godot-game-feel-lab?utm_source=github&utm_medium=resource&utm_campaign=godot_game_feel_lab)** runs the same numbers with nothing to install.
 - New to Godot? **[2D Roguelike: Top-Down Controller](https://codingquests.io/quests/2d-roguelike-controller?utm_source=github&utm_medium=resource&utm_campaign=godot_game_feel_lab)** is free, 8 lessons, written and graded in the browser.
+
+## More Free Godot Resources from CodingQuests
+
+Other free, MIT-licensed Godot 4 projects that work well next to this one:
+
+- **[Hitbox and Hurtbox](https://github.com/CodingQuests/godot-hitbox-hurtbox)**: Health, hitbox and hurtbox components with one hit per swing, knockback, hit-stop and i-frames.
+- **[Top-Down Controller](https://github.com/CodingQuests/godot-top-down-controller)**: 8-direction movement, mouse aim, a dash with i-frames and a follow camera with shake.
+- **[Enemy AI](https://github.com/CodingQuests/godot-enemy-ai)**: Four enemy types and a three-pattern boss on one shared state machine, with attacks you can read.
+- **[Platformer Controller](https://github.com/CodingQuests/godot-platformer-controller)**: Coyote time, jump buffering, variable jump height, double jump, air dash and wall jump.
+
+All twelve are listed on the [CodingQuests GitHub profile](https://github.com/CodingQuests).
 
 Made by [CodingQuests](https://codingquests.io/?utm_source=github&utm_medium=resource&utm_campaign=godot_game_feel_lab).
