@@ -142,7 +142,8 @@ func hit_stop(duration: float) -> void:
 	var token := _hitstop_token
 	frozen = true
 	if freeze_style == FreezeStyle.EVERYTHING:
-		Engine.time_scale = 0.0
+		# Not 0.0: a zero physics step breaks bodies standing on moving platforms.
+		Engine.time_scale = 0.02
 	await get_tree().create_timer(duration, true, false, true).timeout
 	# A later hit_stop already owns the clock. Leave it frozen for that one.
 	if token == _hitstop_token:

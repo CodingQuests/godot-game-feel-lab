@@ -116,18 +116,21 @@ heavy the attack is. Set it to 0 and swing, then set it to 0.08 and swing again.
 
 ### The one bug everybody writes
 
-Hit-stop is `Engine.time_scale = 0.0`, wait, then set it back to 1.0. The obvious
-way to wait is the one that breaks:
+Hit-stop is `Engine.time_scale = 0.02`, wait, then set it back to 1.0. Not 0.0:
+with a time scale of exactly zero, Godot's physics divides by zero for anything
+standing on a moving platform, and it can vanish (a NaN position) or hang the game.
+0.02 looks the same on screen. The obvious way to wait is the one that breaks:
 
 ```gdscript
-# Freezes your game forever.
-Engine.time_scale = 0.0
+# Freezes your game 50 times longer than you asked.
+Engine.time_scale = 0.02
 await get_tree().create_timer(duration).timeout
 Engine.time_scale = 1.0
 ```
 
-`create_timer` runs on scaled time by default. At a time scale of zero it never
-finishes, so the line that unfreezes the game never runs. The fourth argument is
+`create_timer` runs on scaled time by default. At a time scale of 0.02 it runs 50
+times slower, so a 0.08 second freeze lasts 4 seconds and the game looks locked
+up. The fourth argument is
 `ignore_time_scale`, and it is the whole fix:
 
 ```gdscript
@@ -144,8 +147,8 @@ the camera keep shaking, and the damage number keep climbing. A total freeze rea
 as a dropped frame, because that is what a dropped frame looks like. A freeze with
 the effects still running reads as impact.
 
-`Engine.time_scale = 0.0` is the one line version and it stops everything. It is
-fine at 3 or 4 frames. At 12 frames it feels like the game hitched. The other
+`Engine.time_scale = 0.02` is the one line version and it all but stops everything.
+It is fine at 3 or 4 frames. At 12 frames it feels like the game hitched. The other
 style is a `frozen` flag that only the two bodies check:
 
 ```gdscript
